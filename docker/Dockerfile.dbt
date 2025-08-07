@@ -1,0 +1,14 @@
+# docker/Dockerfile.dbt
+ FROM ghcr.io/dbt-labs/dbt-snowflake:1.8.0
+ # Copy dbt project and profiles into the image
+ WORKDIR /app
+ COPY dbt/ ./
+ # Add private key (in CI, write it from a GitHub Secret to this path before build)
+ # For local testing you can COPY it from host; in CI, create the file dynamically.
+ # Make sure permissions are restricted.
+ # RUN mkdir -p /root/.ssh && chmod 700 /root/.ssh
+ # COPY snowflake_rsa_key.p8 /root/.ssh/snowflake_rsa_key.p8
+ # RUN chmod 600 /root/.ssh/snowflake_rsa_key.p8
+ ENV DBT_PROFILES_DIR=/app/profiles
+ # Default command (overridden by Airflow task)
+ CMD ["dbt", "run"]

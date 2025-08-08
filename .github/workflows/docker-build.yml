@@ -37,7 +37,7 @@
       - name: Publish image with key (multi-stage alternative)
         run: |
           # Simple rebuild copying key into image (if you prefer this pattern):
-          docker build -f docker/Dockerfile.dbt -t ${{ secrets.DOCKERHUB_USERNAME }}/dbt_images:latest .
+          docker build --env-file .env -f docker/Dockerfile.dbt -t ${{ secrets.DOCKERHUB_USERNAME }}/dbt_images:latest .
           docker create --name tmp ${{ secrets.DOCKERHUB_USERNAME }}/dbt_images:latest
           docker cp /tmp/ssh/snowflake_rsa_key.p8 tmp:/root/.ssh/snowflake_rsa_key.p8
           docker commit tmp ${{ secrets.DOCKERHUB_USERNAME }}/dbt_images:latest

@@ -1,5 +1,11 @@
 # docker/Dockerfile.dbt
- FROM ghcr.io/dbt-labs/dbt-snowflake:1.8.0
+# FROM ghcr.io/dbt-labs/dbt-snowflake:1.8.0
+
+# Example Dockerfile snippet
+FROM python:3.9-slim-buster # Or your preferred base image
+
+# Install dbt-core and dbt-snowflake
+RUN pip install dbt-core dbt-snowflake==1.8.0
 
  # Set Snowflake variables as environment variables inside the image
  ENV SNOWFLAKE_ACCOUNT=$SNOWFLAKE_ACCOUNT
